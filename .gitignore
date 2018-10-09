@@ -4,3 +4,4 @@
 !/Application/Runtime/Data/index.html
 !/Application/Runtime/Logs/index.html
 !/Application/Runtime/Temp/index.html
+/Application/Home/View/Public/static/*

@@ -4,6 +4,18 @@ function getCarInfoByCarTypeID($id)
 	return D('CarInfoView')->where('car_type.id='.$id)->find();
 }
 
+function sortedNav($pid = 0){
+	$data = M('nav')->where("pid = $pid")->order('sort asc')->select();
+	$temp = array();
+	if (sizeof($data) != 0){
+            foreach ($data as $key => $val){
+                $val['list'] = sortedNav($val['id']);
+                $temp[] = $val;
+            }
+            return $temp;
+        }
+}
+
 function getOilInfo($id)
 {
 	return M('car_oil')->find($id);

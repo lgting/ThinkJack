@@ -5,7 +5,7 @@ use Admin\Controller;
 class NavController extends BaseController{
     public function add(){
         if(!IS_POST){
-            $navs = D('nav')->order('sort desc')->select();
+            $navs = D('nav')->order('sort asc')->select();
             $navs = getSortedCategory($navs);
             $this->assign('navs',$navs);
             $this->display();
@@ -55,7 +55,7 @@ class NavController extends BaseController{
     }
 
     public function index(){
-        $navs = D('nav')->select();
+        $navs = D('nav')->order('sort asc')->select();
         $navs = getSortedCategory($navs);
         $this->assign('navs',$navs);
         $this->display();
