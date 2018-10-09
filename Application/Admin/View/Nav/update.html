@@ -1,0 +1,33 @@
+<include file="Public/header" title="修改导航" />
+<div id="page-wrapper">
+    <form method="post" action="{:U('nav/update')}">
+        <div class="form-group">
+            <label for="aa">导航标题</label>
+            <input type="text" name="title" value="{$nav.title}" class="form-control" id="aa" placeholder="输入导航标题">
+        </div>
+        <div class="form-group">
+            <label for="bb">父分类</label>
+            <select name="pid" id="bb" class="form-control">
+                <option value="">顶级导航</option>
+                <foreach name="navs" item="v">
+                    <if condition="$nav['pid'] eq $v['id']">
+                        <option value="{$v.id}" selected>{$v.html} {$v.title}</option>
+                    <else />
+                        <option value="{$v.id}">{$v.html} {$v.title}</option>
+                    </if>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cc">导航链接</label>
+            <input type="text" name="link" value="{$nav.link}" class="form-control" id="cc" placeholder="输入导航链接">
+        </div>
+        <div class="form-group">
+            <label for="dd">排序</label>
+            <input type="number" name="sort" value="{$nav.sort}" class="form-control" id="dd" placeholder="输入排序">
+        </div>
+        <input type="hidden" name="id" value="{$nav.id}">
+        <button type="submit" class="btn btn-default">修改</button>
+    </form>
+</div>
+<include file="Public/footer" />

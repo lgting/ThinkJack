@@ -1,0 +1,39 @@
+
+<include file="Public/header" title="轮播图列表" />
+
+<div id="page-wrapper">
+    
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{:U('carousel/add')}" class="btn btn-success">添加轮播图</a>
+        </div>
+    </div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>名称</th>
+                <th>链接</th>
+                <th>轮播图</th>
+                <th>排序</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        <foreach name="carousels" item="v">
+            <tr>
+                <td>{$v.id}</td>
+                <td>{$v.name}</td>
+                <td>{$v.link}</td>
+                <td>{$v.path}</td>
+                <td>{$v.sort}</td>
+                <td><a href="{:U('carousel/update?id=')}{$v.id}">编辑</a> | <a href="{:U('carousel/delete?id=')}{$v.id}" style="color:red;" onclick="javascript:return del('您真的确定要删除吗？\n\n删除后将不能恢复!');">删除</a></td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    {$page}
+</div>
+
+
+<include file="Public/footer" />

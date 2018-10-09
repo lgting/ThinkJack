@@ -1,0 +1,28 @@
+<include file="Public/header" title="添加轮播图" />
+<div id="page-wrapper"> 
+    <form method="post" action="{:U('carousel/add')}" enctype="multipart/form-data">
+           <div class="form-group">
+            <label for="aa">轮播图名称</label>
+            <input type="text" name="name" class="form-control" id="aa" placeholder="输入轮播图标题">
+        </div>
+        <div class="form-group">
+            <label for="bb">是否显示</label>
+            <input type="radio" name="dispaly" value="0">不显示
+            <input type="radio" name="dispaly" value="1" checked>显示
+        </div>
+        <div class="form-group">
+            <label for="cc">轮播图</label>
+            <input type="file" name="path" class="form-control" id="cc">
+        </div>
+        <div class="form-group">
+            <label for="cc">轮播图链接</label>
+            <input type="text" name="link" class="form-control" id="cc" placeholder="输入轮播图链接">
+        </div>
+        <div class="form-group">
+            <label for="dd">排序</label>
+            <input type="number" name="sort" class="form-control" id="dd" placeholder="输入排序">
+        </div>
+        <button type="submit" class="btn btn-default">添加</button>
+    </form>
+</div>
+<include file="Public/footer" />
