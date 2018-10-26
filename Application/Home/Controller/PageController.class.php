@@ -1,12 +1,13 @@
+
 <?php
-
 namespace Home\Controller;
+use Home\Controller;
 
-use Think\Controller;
+class PageController extends BaseController{
 
-class PageController extends Controller{
-
-    public function index($name){
+    public function index(){
         $this->display();
     }
+
+
 }

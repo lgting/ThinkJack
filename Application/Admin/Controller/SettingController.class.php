@@ -15,7 +15,7 @@ class SettingController extends BaseController
         if($key == ""){
             $model = M('setting');  
         }else{
-            $where['key'] = array('like',"%$key%");
+            $where['item'] = array('like',"%$key%");
             $where['description'] = array('like',"%$key%");
             $where['_logic'] = 'or';
             $model = M('setting')->where($where); 
@@ -42,13 +42,22 @@ class SettingController extends BaseController
         if (IS_POST) {
             //如果用户提交数据
             $model = D("Setting");
-            if (!$model->create()) {
+            $valiidateForm = $model->create();
+            if (!$valiidateForm) {
                 // 如果创建失败 表示验证没有通过 输出错误提示信息
                 $this->error($model->getError());
                 exit();
             } else {
-
-                if ($model->add()) {
+                if(I('post.type') == 'image'){
+                    $imageObject =  $this->uploadImage('setting/',2000000);
+                    $image = $imageObject->uploadOne($_FILES['value']);
+                    if($image){
+                        $valiidateForm['value'] = '/Public/upload/'.$image['savepath'].$image['savename'];
+                    }else{
+                        $this->error($imageObject->getError());
+                    }
+                }
+                if ($model->add($valiidateForm)) {
                     $this->success("字段添加成功", U('setting/index'));
                 } else {
                     $this->error("字段添加失败");
@@ -75,6 +84,15 @@ class SettingController extends BaseController
                 $this->error($model->getError());
             }else{
              //   dd(I());die;
+                if(I('post.type') == 'image' && !empty($_FILES['value'])){
+                    $imageObject =  $this->uploadImage('setting/',2000000);
+                    $image = $imageObject->uploadOne($_FILES['value']);
+                    if($image){
+                        $model->value = '/Public/upload/'.$image['savepath'].$image['savename'];
+                    }else{
+                        $this->error($imageObject->getError());
+                    }
+                }
                 if ($model->save()) {
                     $this->success("字段更新成功", U('setting/index'));
                 } else {
@@ -91,7 +109,10 @@ class SettingController extends BaseController
     public function delete($id)
     {
         $model = M('setting');
- 
+        $data = $model->find($id);
+        if($data['type'] == 'image'){
+            unlink(BASE_PATH.$data['value']);
+        }
         //验证通过
         $result = $model->delete($id);
         if($result){

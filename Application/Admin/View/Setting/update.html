@@ -1,13 +1,31 @@
 <include file="Public/header" title="更新字段" />
 <div id="page-wrapper">
-    <form method="post" action="{:U('setting/update')}">
+    <form method="post" action="{:U('setting/update')}" enctype="multipart/form-data">
         <div class="form-group">
             <label for="aa">字段名</label>
-            <input type="text" name="key" class="form-control" id="aa" value="{$model.key}" placeholder="key">
+            <input type="text" name="item" class="form-control" id="aa" value="{$model.item}" placeholder="item">
         </div>
-        <div class="form-group">
-            <label for="bb">字段值</label>
-            <textarea name="value" id="bb" class="form-control"  cols="30" rows="10" placeholder="value">{$model.value}</textarea>
+        <div class="form-group" id="form_item_type">
+            <label for="aa">字段类型</label>
+            <select name="type" class="form-control">
+                <option value="image" <if condition="$model['type'] eq 'image'">selected</if>>图片</option>
+                <option value="text" <if condition="$model['type'] eq 'text'">selected</if>>文本</option>
+            </select>
+        </div>
+        <if condition="$model['type'] eq 'image'">
+            <div class="form-group" id="form_item_image">
+                <img src="{$model.value}" alt="" style="width:20%;margin-top:8px">
+            </div>
+        </if>
+        <div class="form-group" id="form_item_value">
+            <if condition="$model.type eq 'text'">
+                <label for="bb">字段值</label>
+                <textarea name="value" id="bb" class="form-control"  cols="30" rows="10" placeholder="value">{$model.value}</textarea>
+            </if>
+            <if condition="$model.type eq 'image'">
+                <label for="bb">字段值</label>
+                <input type="file" name="value" class="form-control">
+            </if>
         </div>
         <div class="form-group">
             <label for="cc">字段描述</label>
@@ -19,4 +37,26 @@
         </div>
     </form>
 </div>
+<script>
+    window.onload = function (){
+        var form_item_type = $('#form_item_type')
+        var form_item_value = $('#form_item_value')
+        var form_item_value_label = form_item_value.find('label')
+        form_item_type.find('select').change(function(){
+            switch ($(this).val()){
+                case 'image':
+                    form_item_value_label.text('图片地址')
+                    form_item_value.find('textarea').remove()
+                    form_item_value_label.after('<input type="file" name="value" class="form-control" >')
+                break;
+                case 'text':
+                    form_item_value_label.text('字段值')
+                    form_item_value.find('textarea').remove()
+                    form_item_value_label.after('<textarea name="value" id="bb" class="form-control"  cols="30" rows="10" placeholder="value"></textarea>')
+                    $('#form_item_image').remove()
+                break;
+            }
+        })
+    }
+</script>
 <include file="Public/footer" />

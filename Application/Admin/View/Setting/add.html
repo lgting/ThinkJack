@@ -1,11 +1,18 @@
 <include file="Public/header" title="添加字段" />
 <div id="page-wrapper">
-    <form method="post" action="{:U('setting/add')}">
+    <form method="post" action="{:U('setting/add')}" enctype="multipart/form-data">
         <div class="form-group">
             <label for="aa">字段名</label>
-            <input type="text" name="key" class="form-control" id="aa" placeholder="key">
+            <input type="text" name="item" class="form-control" id="aa" placeholder="item">
         </div>
-        <div class="form-group">
+        <div class="form-group" id="form_item_type">
+            <label for="aa">字段类型</label>
+            <select name="type" class="form-control">
+                <option value="image">图片</option>
+                <option value="text" selected>文本</option>
+            </select>
+        </div>
+        <div class="form-group" id="form_item_value">
             <label for="bb">字段值</label>
             <textarea name="value" id="bb" class="form-control"  cols="30" rows="10" placeholder="value"></textarea>
         </div>
@@ -18,4 +25,25 @@
         </div>
     </form>
 </div>
+<script>
+    window.onload = function (){
+        var form_item_type = $('#form_item_type')
+        var form_item_value = $('#form_item_value')
+        var form_item_value_label = form_item_value.find('label')
+        form_item_type.find('select').change(function(){
+            switch ($(this).val()){
+                case 'image':
+                    form_item_value_label.text('图片地址')
+                    form_item_value.find('textarea').remove()
+                    form_item_value_label.after('<input type="file" name="value" class="form-control" >')
+                break;
+                case 'text':
+                    form_item_value_label.text('字段值')
+                    form_item_value.find('textarea').remove()
+                    form_item_value_label.after('<textarea name="value" id="bb" class="form-control"  cols="30" rows="10" placeholder="value"></textarea>')
+                break;
+            }
+        })
+    }
+</script>
 <include file="Public/footer" />

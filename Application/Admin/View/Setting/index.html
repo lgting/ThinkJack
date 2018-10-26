@@ -31,7 +31,7 @@
         <foreach name="model" item="v">
             <tr>
                 <td>{$v.id}</td>
-                <td>{$v.key}</td>
+                <td>{$v.item}</td>
                 <!-- <td>{$v.value}</td> -->
                 <td>{$v.description}</td> 
                 <td><a href="{:U('setting/update?id=')}{$v.id}">编辑</a> | <a href="{:U('setting/delete?id=')}{$v.id}" style="color:red;" onclick="javascript:return del('您真的确定要删除吗？\n\n删除后将不能恢复!');">删除</a></td>
